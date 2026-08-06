@@ -1,6 +1,8 @@
 # Apple App Store listing — Task Monster (submission pack)
 
-Status: **submitted for review 2026-07-19** ("Waiting for Review"; up to ~48h).
+Status: **resubmitted for review 2026-08-06** ("Waiting for Review"). The
+2026-07-19 submission was rejected 2026-07-29 under Guideline 2.3.6 — resolved
+by setting the Age Rating In-App Controls to None (see walkthrough step 8).
 Adapted from the Play submission pack
 ([`../play-store/listing.md`](../play-store/listing.md)).
 
@@ -25,7 +27,7 @@ Adapted from the Play submission pack
 | Primary category | Lifestyle |
 | Secondary category | Productivity |
 | Content rights | Does not contain third-party content |
-| Age rating | 4+ (all questionnaire answers "No"/"None") |
+| Age rating | 4+ (all questionnaire answers "No"/"None" — incl. In-App Controls: Parental Controls = None, Age Assurance = None; see step 8) |
 | Kids Category | **Do not opt in** (see note below) |
 
 **Kids Category note:** the app is family-friendly, but Apple's Kids Category
@@ -150,6 +152,19 @@ mentioned above" / exempt. `ITSAppUsesNonExemptEncryption = NO` is set in
        iPhone 6.5" + 3× iPad 13" screenshots, review contact, age rating 4+.
 7. [x] **Submitted for review** ("Waiting for Review"). Reviews take up to
        ~48 hours typically.
+8. [x] **Rejection resolved** (rejected 2026-07-29, resubmitted 2026-08-06):
+       Guideline 2.3.6 Accurate Metadata — the questionnaire declared
+       "Parental Controls = Yes" under In-App Controls, but the reviewer
+       couldn't find the opt-in app-bar parent lock on the review iPad (its
+       tooltip never renders on touch), and the app has no Age Assurance.
+       Fix per Apple's suggested path: Age Ratings questionnaire → Parental
+       Controls → **None** (Age Assurance already None; every other answer
+       untouched; calculated rating stays 4+), then version page → "Update
+       Review" → "Resubmit to App Review" — same build 19, no new binary.
+       Note: the reply thread closes once resubmitted, so any reply to App
+       Review must be sent *before* resubmitting. The in-app parent lock
+       stays (and stays in the description); it just isn't declared as an
+       In-App Control.
 
 Remaining follow-ups:
 
