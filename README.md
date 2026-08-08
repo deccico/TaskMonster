@@ -56,6 +56,25 @@ Layout:
 
 The script runs the full cycle: analyze + tests → patch version bump (`tool/bump_version.dart`) → commit & push → wait for GitHub CI to go green → build web → deploy to Firebase Hosting.
 
+### iOS (App Store)
+
+```bash
+./scripts/release_ios.sh --upload
+```
+
+Archive → export → upload to App Store Connect. Export signing is **manual**
+(`ios/ExportOptions.plist`): the release Mac has no Apple ID signed into
+Xcode.app, and an App Store Connect API key cannot drive cloud-managed signing
+either, so the export is pinned to the team's Apple Distribution identity and
+the `Task Monster App Store` profile. Apple deletes that profile whenever the
+distribution certificate is revoked — recreate it with `python3
+scripts/mint_ios_profile.py --replace`. Uploading only puts the build in App
+Store Connect; attaching it to a version and submitting for review is still
+done there.
+
+The donation ("Buy me a coffee") entry is hidden on iOS — App Store Review does
+not allow it. Android and web keep it.
+
 ## Credits
 
 Built by [Darumatic](https://darumatic.com). Task Monster is free and ad-free — if it helps your family, there's a "Buy me a coffee" link in the app's menu. ☕

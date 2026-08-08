@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Export signing is MANUAL on purpose. The automatic style asks the Apple ID
+  signed into Xcode.app for a distribution certificate, and this release Mac has
+  no Xcode account ("No Accounts"); an App Store Connect API key does not help
+  either — cloud-managed signing rejects it ("Cloud signing permission error").
+
+  So the export is pinned to the team's Apple Distribution identity and to the
+  "Task Monster App Store" profile. KEEP THAT PROFILE NAME STABLE — it is matched
+  by name here. See scripts/mint_ios_profile.py to recreate it (the profile is
+  deleted whenever the distribution certificate is revoked/replaced).
+-->
 <plist version="1.0">
 <dict>
 	<key>method</key>
@@ -7,7 +18,14 @@
 	<key>teamID</key>
 	<string>76UL6RCLTT</string>
 	<key>signingStyle</key>
-	<string>automatic</string>
+	<string>manual</string>
+	<key>signingCertificate</key>
+	<string>Apple Distribution</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.darumatic.taskMonster</key>
+		<string>Task Monster App Store</string>
+	</dict>
 	<key>uploadSymbols</key>
 	<true/>
 	<key>destination</key>
