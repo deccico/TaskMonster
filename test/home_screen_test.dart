@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -567,6 +568,8 @@ void main() {
   testWidgets('info menu opens About, Support, and Credits dialogs', (
     tester,
   ) async {
+    // Runs as Android (flutter_test's default target platform), where the
+    // donation entry is shown — the iOS case is covered by the test below.
     await pumpApp(tester);
 
     Future<void> openMenu() async {
@@ -642,6 +645,28 @@ void main() {
     expect(find.text('darumatic.com'), findsOneWidget);
     await closeDialog();
 
+    await teardownTree(tester);
+  });
+
+  testWidgets('info menu hides the donation entry on iOS', (tester) async {
+    // App Store Review does not allow the donation link, so the entry is
+    // dropped from the sheet on iOS — the rest of the menu stays put.
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+    await pumpApp(tester);
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 350));
+
+    expect(find.widgetWithText(ListTile, 'Buy me a coffee'), findsNothing);
+    expect(find.widgetWithText(ListTile, 'About Task Monster'), findsOneWidget);
+    expect(find.widgetWithText(ListTile, 'Support'), findsOneWidget);
+    expect(find.widgetWithText(ListTile, 'Credits'), findsOneWidget);
+
+    // Reset inside the body: the binding asserts no foundation debug variable
+    // is still set once the test function returns.
+    debugDefaultTargetPlatformOverride = null;
     await teardownTree(tester);
   });
 

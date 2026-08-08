@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -357,8 +358,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   static const String _buyMeACoffeeUrl = 'https://buymeacoffee.com/darumatic';
   static const String _darumaticUrl = 'https://darumatic.com';
 
+  /// Donation links are not allowed in the iOS build (App Store Review
+  /// guidelines), so the "Buy me a coffee" entry is Android/web only.
+  static bool get _donationsAllowed =>
+      kIsWeb || defaultTargetPlatform != TargetPlatform.iOS;
+
   /// The little info menu behind the header's kebab button: About, Support,
-  /// Buy me a coffee, and Credits.
+  /// Buy me a coffee (except on iOS), and Credits.
   Future<void> _openInfoMenu() async {
     await showModalBottomSheet<void>(
       context: context,
@@ -403,16 +409,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     _showSupportDialog();
                   },
                 ),
-                ListTile(
-                  leading: leadingIcon(Icons.local_cafe_outlined),
-                  title: const Text('Buy me a coffee'),
-                  subtitle: const Text('Shout the dev a coffee'),
-                  trailing: const Icon(Icons.chevron_right_rounded),
-                  onTap: () {
-                    Navigator.pop(sheetContext);
-                    _showCoffeeDialog();
-                  },
-                ),
+                if (_donationsAllowed)
+                  ListTile(
+                    leading: leadingIcon(Icons.local_cafe_outlined),
+                    title: const Text('Buy me a coffee'),
+                    subtitle: const Text('Shout the dev a coffee'),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () {
+                      Navigator.pop(sheetContext);
+                      _showCoffeeDialog();
+                    },
+                  ),
                 ListTile(
                   leading: leadingIcon(Icons.favorite_outline_rounded),
                   title: const Text('Credits'),

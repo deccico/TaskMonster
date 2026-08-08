@@ -89,10 +89,11 @@ Same copy as the Play full description (works unchanged):
 - Contact: Adrian Deccico, hello@darumatic.com
 - Sign-in required: **No** (no accounts; parent PIN is user-created on-device)
 - Notes for review: "All functionality is available without credentials. The
-  optional parent lock PIN is created on-device by the user. External links
-  (donation, developer site) sit behind a parental gate as required for apps
-  used by children. No ads, no purchases, no data collection beyond anonymous
-  Firebase Analytics events."
+  optional parent lock PIN is created on-device by the user. The only external
+  link (developer site) sits behind a parental gate as required for apps used
+  by children. The iOS build contains no donation link or donation prompt of
+  any kind. No ads, no purchases, no data collection beyond anonymous Firebase
+  Analytics events."
 
 ## App Privacy (privacy "nutrition label")
 
